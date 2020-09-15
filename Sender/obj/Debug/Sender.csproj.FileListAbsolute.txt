@@ -1,0 +1,7 @@
+F:\visualstudioprojects\EnvironmentMonitoring\Sender\bin\Debug\Sender.exe.config
+F:\visualstudioprojects\EnvironmentMonitoring\Sender\bin\Debug\Sender.exe
+F:\visualstudioprojects\EnvironmentMonitoring\Sender\bin\Debug\Sender.pdb
+F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Debug\Sender.csprojAssemblyReference.cache
+F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Debug\Sender.csproj.CoreCompileInputs.cache
+F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Debug\Sender.exe
+F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Debug\Sender.pdb

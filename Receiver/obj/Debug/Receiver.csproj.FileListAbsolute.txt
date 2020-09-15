@@ -1,0 +1,7 @@
+F:\visualstudioprojects\EnvironmentMonitoring\Receiver\bin\Debug\Receiver.exe.config
+F:\visualstudioprojects\EnvironmentMonitoring\Receiver\bin\Debug\Receiver.exe
+F:\visualstudioprojects\EnvironmentMonitoring\Receiver\bin\Debug\Receiver.pdb
+F:\visualstudioprojects\EnvironmentMonitoring\Receiver\obj\Debug\Receiver.csprojAssemblyReference.cache
+F:\visualstudioprojects\EnvironmentMonitoring\Receiver\obj\Debug\Receiver.csproj.CoreCompileInputs.cache
+F:\visualstudioprojects\EnvironmentMonitoring\Receiver\obj\Debug\Receiver.exe
+F:\visualstudioprojects\EnvironmentMonitoring\Receiver\obj\Debug\Receiver.pdb
