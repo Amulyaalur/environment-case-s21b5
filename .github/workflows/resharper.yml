@@ -18,7 +18,7 @@ jobs:
         run: jb inspectcode EnvironmentMonitoring.sln /output=insreport.xml
        
       - name: Run resharper duplicate code check
-        run: jb dupfinder EnvironmentMonitoring.sln -o=dupreport.xml
+        run: jb dupfinder EnvironmentMonitoring.sln /output=dupreport.xml
        
       - name: Check Reports
         run: powershell ./resharper.ps1
