@@ -11,7 +11,7 @@ function WriteXmlToScreen ([xml]$xml)
     Write-Output $StringWriter.ToString();
 }
 
-$report = Get-Content -Path UnitTestProject\TestResults\*\coverage.cobertura.xml | Out-String
+$report = Get-Content -Path Sender.Tests\TestResults\aa6e4ca8-9f94-48b8-ba10-71961f3dd519\coverage.cobertura.xml,Receiver.Tests\TestResults\22ed340e-7c7a-4904-85ad-a4429157d456\coverage.cobertura.xml | Out-String
 Write-Host "---------------------------------"
 Write-Host "Code Coverage report ..." 
 Write-Host "---------------------------------"
