@@ -17,5 +17,7 @@ jobs:
         dotnet-version: 3.1.100
     - name: Build with dotnet
       run: dotnet build --configuration Release
+    - name: Run Application
+      run: Sender\bin\Release\Sender.exe | Receiver\bin\Release\Receiver.exe
     - name: Run unit tests
       run: dotnet test --no-build --configuration Release
