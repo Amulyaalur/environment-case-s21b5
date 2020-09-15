@@ -11,35 +11,35 @@ function WriteXmlToScreen ([xml]$xml)
     Write-Output $StringWriter.ToString();
 }
 
-$report = Get-Content -Path  D:\a\environment-case-s21b5\environment-case-s21b5\*\TestResults\*\coverage.cobertura.xml | Out-String
+$report_of_sender = Get-Content -Path  Sender.Tests\TestResults\*\coverage.cobertura.xml | Out-String
 Write-Host "---------------------------------"
-Write-Host "Code Coverage report ..." 
+Write-Host "Code Coverage report of SenderTest ..." 
 Write-Host "---------------------------------"
-WriteXmlToScreen $report
+WriteXmlToScreen $report_of_sender
 
-[xml]$doc = $report
+[xml]$doc_send = $report_of_sender
 
 Write-Host ""
 Write-Host "---------------------------------"
-Write-Host "Code Coverage report Analysis..." 
+Write-Host "Code Coverage report of ReceiverTest Analysis..." 
 Write-Host "---------------------------------"
 
-$result = 0
+$result_send = 0
 
-Write-Host "Line-Coverage: ["$doc.coverage.'line-rate'"] Branch-Coverage: ["$doc.coverage.'branch-rate'"]"
+Write-Host "Line-Coverage: ["$doc_send.coverage.'line-rate'"] Branch-Coverage: ["$doc_send.coverage.'branch-rate'"]"
 Write-Host ""
- foreach ($pkg in $doc.coverage.packages.package) {
+ foreach ($pkg in $doc_send.coverage.packages.package) {
     Write-Host "Package:"  $pkg.name "Line-Coverage:"$pkg.'line-rate'
 
     if($pkg.'line-rate' -lt $linerate){
-        $result= 1
+        $result_send= 1
        }
     }
 
-if($result -eq 1){
+if($result_send -eq 1){
     Write-Host "Coverage Check: failed" -ForegroundColor red 
 }
 else{
     Write-Host "Coverage Check: Passed" -ForegroundColor green 
 }
-exit $result
+exit $result_send
