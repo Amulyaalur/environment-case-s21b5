@@ -1,57 +1,67 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+
 
 namespace Receiver
 {
     public struct Properties
     {
         public string property_Name;
-       
+
     }
 
-    public class Program
+    public class Receiver
     {
-        public static List<Properties> Properties_list=new List<Properties>();
+        public List<Properties> Properties_list = new List<Properties>();
         static string[] Properties_names;
-        
-        static string[] SplitLine(string line)
+        public readonly TextReader input;
+        public readonly TextWriter output;
+        public Receiver() : this(Console.In, Console.Out)
+        {
+
+        }
+        public Receiver(TextReader input, TextWriter output)
+        {
+            this.input = input;
+            this.output = output;
+        }
+        public string[] SplitLine(string line)
         {
             string[] split = line.Split(',');
             return split;
         }
-        public static void GetPropertyNames()
+        public void GetPropertyNames()
         {
-            string line = string.Empty;
-            line = Console.ReadLine();
-            Properties_names=SplitLine(line);
-            
+            string line = input.ReadLine();
+            Properties_names = SplitLine(line);
+
         }
-        static void AssignIndexToProperties()
+        public void AssignIndexToProperties()
         {
-            for(int i=0;i<Properties_names.Length;i++)
+            for (int i = 0; i < Properties_names.Length; i++)
             {
                 Properties temp;
                 temp.property_Name = Properties_names[i];
                 Properties_list.Add(temp);
             }
-            
+
         }
-        static void GetReadingsFromSensorAndAnalyze()
+        public bool GetReadingsFromSensorAndAnalyze()
         {
-            string line = string.Empty;
-            line = Console.ReadLine();
-            
+            string line = input.ReadLine();
+
             while (!line.Equals(""))
             {
-                
                 string[] values;
-                values= SplitLine(line);
-                AnalyzeTemperature(values);
-                AnalyzeHumidity(values);
-                line = Console.ReadLine();
+                values = SplitLine(line);
+                PrintOnConsole(AnalyzeTemperature(values));
+                PrintOnConsole(AnalyzeHumidity(values));
+                line = input.ReadLine();
             }
+            return true;
         }
-        static int getIndex(string property_name)
+        int GetIndex(string property_name)
         {
             int id = -1;
             for (uint i = 0; i < Properties_list.Count; i++)
@@ -64,94 +74,106 @@ namespace Receiver
             }
             return id;
         }
-        static void AnalyzeTemperature(string[] values)
+        public string AnalyzeTemperature(string[] values)
         {
-            int index = getIndex("Temperature");
-            if(index>=0)
+            int index = GetIndex("Temperature");
+            if (index >= 0)
             {
-                AlertTemperatureIfOutOfLimits(values, index);
+                return AlertTemperatureIfOutOfLimits(values, index);
+
             }
             else
             {
-                Console.WriteLine("CSV does not contain Temperature property.");
+                return "CSV does not contain Temperature property.";
             }
-            
+
         }
-        static void AlertTemperatureIfOutOfLimits(string[] values, int index)
+        public string AlertTemperatureIfOutOfLimits(string[] values, int index)
         {
             if (int.Parse((values[index].Split('C'))[0]) > 37)
             {
-                AlertForHighLimitsForTemperature(values, index);
+                return AlertForHighLimitsForTemperature(values, index);
             }
             else if (int.Parse((values[index].Split('C'))[0]) < 4)
             {
-                AlertForLowerLimitsForTemperature(values, index);
+                return AlertForLowerLimitsForTemperature(values, index);
             }
+            return null;
         }
-        static void AlertForHighLimitsForTemperature(string[] values, int index)
+        string AlertForHighLimitsForTemperature(string[] values, int index)
         {
             if (int.Parse((values[index].Split('C'))[0]) > 40)
             {
-                Console.WriteLine("Temperature reached High Error level:" + values[index]);
+                return "Temperature reached High Error level:" + values[index].ToString();
             }
             else
             {
-                Console.WriteLine("Temperature reached High Warning level:" + values[index]);
+                return "Temperature reached High Warning level:" + values[index].ToString();
             }
         }
-        static void AlertForLowerLimitsForTemperature(string[] values, int index)
+        string AlertForLowerLimitsForTemperature(string[] values, int index)
         {
             if (int.Parse((values[index].Split('C'))[0]) < 0)
             {
-                Console.WriteLine("Temperature reached Low Error level:" + values[index]);
+                return "Temperature reached Low Error level:" + values[index].ToString();
             }
             else
             {
-                Console.WriteLine("Temperature reached Low Warning level:" + values[index]);
+                return "Temperature reached Low Warning level:" + values[index].ToString();
             }
         }
-        
-        static void AnalyzeHumidity(string[] values)
+
+        public string AnalyzeHumidity(string[] values)
         {
-            int index = getIndex("Humidity");
+            int index = GetIndex("Humidity");
             //Console.WriteLine(index);
-            if(index>=0)
+            if (index >= 0)
             {
-                AlertHumidityIfOutOfLimits(values, index);
+                return AlertHumidityIfOutOfLimits(values, index);
+
             }
             else
             {
-                Console.WriteLine("CSV does not contain Temperature property.");
+                return "CSV does not contain Humidity property.";
             }
 
 
         }
-        static void AlertHumidityIfOutOfLimits(string[] values, int index)
+        string AlertHumidityIfOutOfLimits(string[] values, int index)
         {
             if (int.Parse((values[index].Split('%'))[0]) > 90)
             {
-                Console.WriteLine("Humidity reached Error level:" + values[index]);
+                return "Humidity reached Error level:" + values[index].ToString();
             }
             else if (int.Parse((values[index].Split('%'))[0]) > 70)
             {
-                Console.WriteLine("Humidity reached Warnig level:" + values[index]);
+                return "Humidity reached Warnig level:" + values[index].ToString();
             }
+            return null;
         }
-        static void PrintProperties()
+        /*
+        void PrintProperties()
         {
             for(int i=0;i<Properties_list.Count;i++)
             {
                 Console.Write(Properties_list[i].property_Name+",");
             }
             Console.WriteLine();
-        }
-        static void Main(string[] args)
+        }*/
+        public void PrintOnConsole(string message)
         {
-            GetPropertyNames();
-            AssignIndexToProperties();
+            if (message != null)
+                output.WriteLine(message);
+        }
+
+        private static void Main()
+        {
+            Receiver r = new Receiver();
+            r.GetPropertyNames();
+            r.AssignIndexToProperties();
             //PrintProperties();
-            GetReadingsFromSensorAndAnalyze();
-            
+            r.GetReadingsFromSensorAndAnalyze();
+
         }
     }
 }
