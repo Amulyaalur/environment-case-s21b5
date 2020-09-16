@@ -3520,19 +3520,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ajinkya\\.nuget\\packages\\": {}
+    "C:\\Users\\320088465\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\visualstudioprojects\\EnvironmentMonitoring\\Sender.Tests\\Sender.Tests.csproj",
+      "projectUniqueName": "C:\\BootCamp\\environment-case-s21b5\\Sender.Tests\\Sender.Tests.csproj",
       "projectName": "Sender.Tests",
-      "projectPath": "F:\\visualstudioprojects\\EnvironmentMonitoring\\Sender.Tests\\Sender.Tests.csproj",
-      "packagesPath": "C:\\Users\\Ajinkya\\.nuget\\packages\\",
-      "outputPath": "F:\\visualstudioprojects\\EnvironmentMonitoring\\Sender.Tests\\obj\\",
+      "projectPath": "C:\\BootCamp\\environment-case-s21b5\\Sender.Tests\\Sender.Tests.csproj",
+      "packagesPath": "C:\\Users\\320088465\\.nuget\\packages\\",
+      "outputPath": "C:\\BootCamp\\environment-case-s21b5\\Sender.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Ajinkya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\320088465\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3545,8 +3545,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "F:\\visualstudioprojects\\EnvironmentMonitoring\\Sender\\Sender.csproj": {
-              "projectPath": "F:\\visualstudioprojects\\EnvironmentMonitoring\\Sender\\Sender.csproj"
+            "C:\\BootCamp\\environment-case-s21b5\\Sender\\Sender.csproj": {
+              "projectPath": "C:\\BootCamp\\environment-case-s21b5\\Sender\\Sender.csproj"
             }
           }
         }
@@ -3592,7 +3592,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

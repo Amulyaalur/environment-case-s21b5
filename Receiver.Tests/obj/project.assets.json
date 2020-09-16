@@ -3520,19 +3520,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ajinkya\\.nuget\\packages\\": {}
+    "C:\\Users\\320088465\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\visualstudioprojects\\EnvironmentMonitoring\\Receiver.Tests\\Receiver.Tests.csproj",
+      "projectUniqueName": "C:\\BootCamp\\environment-case-s21b5\\Receiver.Tests\\Receiver.Tests.csproj",
       "projectName": "Receiver.Tests",
-      "projectPath": "F:\\visualstudioprojects\\EnvironmentMonitoring\\Receiver.Tests\\Receiver.Tests.csproj",
-      "packagesPath": "C:\\Users\\Ajinkya\\.nuget\\packages\\",
-      "outputPath": "F:\\visualstudioprojects\\EnvironmentMonitoring\\Receiver.Tests\\obj\\",
+      "projectPath": "C:\\BootCamp\\environment-case-s21b5\\Receiver.Tests\\Receiver.Tests.csproj",
+      "packagesPath": "C:\\Users\\320088465\\.nuget\\packages\\",
+      "outputPath": "C:\\BootCamp\\environment-case-s21b5\\Receiver.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Ajinkya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\320088465\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3545,8 +3545,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "F:\\visualstudioprojects\\EnvironmentMonitoring\\Receiver\\Receiver.csproj": {
-              "projectPath": "F:\\visualstudioprojects\\EnvironmentMonitoring\\Receiver\\Receiver.csproj"
+            "C:\\BootCamp\\environment-case-s21b5\\Receiver\\Receiver.csproj": {
+              "projectPath": "C:\\BootCamp\\environment-case-s21b5\\Receiver\\Receiver.csproj"
             }
           }
         }
@@ -3592,7 +3592,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

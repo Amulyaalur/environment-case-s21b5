@@ -10,9 +10,12 @@ namespace Receiver
     {
         static void Main(string[] args)
         {
-            string m = Console.ReadLine();
-            m += Console.ReadLine();
-            Console.WriteLine(m);
-        }
+            string line = string.Empty;
+
+            while (line != null)
+            {
+                line = Console.ReadLine();
+                Console.WriteLine(line);
+            }
     }
 }
