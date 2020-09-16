@@ -28,8 +28,9 @@ namespace Sender
 
         public static void SendDataToReceiver()
         {
-            foreach (var element in dataset) 
+            foreach (var element in dataset)
                 Console.WriteLine(element);
+            Console.WriteLine("\n");
         }
         static void Main(string[] args)
         {
