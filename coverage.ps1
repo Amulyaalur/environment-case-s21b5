@@ -62,7 +62,7 @@ Write-Host ""
        }
     }
 
-if(($result_send -eq 1) -or ($result_receiver -eq 1)){
+if(($result_sender -eq 1) -or ($result_receiver -eq 1)){
     Write-Host "Coverage Check: failed" -ForegroundColor red 
     exit 1
 }
