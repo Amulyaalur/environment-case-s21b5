@@ -1,53 +1,42 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace Sender
+
 {
     class Program
-    {
-         static void Main(string[] args)
-        {
-            var column1 = new List<string>();
-            var column2 = new List<string>();
-            var column3 = new List<string>();
-            var column4 = new List<string>();
 
-            using (var rd = new StreamReader("data.csv"))
+    {
+        public static List<string> dataset = new List<string>();
+        public static List<string> SimulateDataset(String datafile)
+        {
+            using (var rd = new StreamReader(datafile))
             {
                 while (!rd.EndOfStream)
                 {
-                    var splits = rd.ReadLine().Split(',');
-                    column1.Add(splits[0]);
-                    column2.Add(splits[1]);
-                    column3.Add(splits[2]);
-                    column4.Add(splits[3]);
-
+                    var splits = rd.ReadLine().Split('\n');
+                    dataset.Add(splits[0]);
                 }
             }
-            // print Temperature
-            Console.WriteLine("Column 1: ");
-            foreach (var element in column1)
-                Console.WriteLine(element);
+            return dataset;
+        }
 
-            // print Humidity
-            Console.WriteLine("Column 2:");
-            foreach (var element in column2)
+        public static void SendDataToReceiver()
+        {
+            foreach (var element in dataset) 
                 Console.WriteLine(element);
-
-            //print Date
-            Console.WriteLine("Column 3:");
-            foreach (var element in column3)
-                Console.WriteLine(element);
-
-            //print Time
-            Console.WriteLine("Column 4:");
-            foreach (var element in column4)
-                Console.WriteLine(element);
-
+        }
+        static void Main(string[] args)
+        {
+            string datafile = "data.csv";
+            SimulateDataset(datafile);
+            SendDataToReceiver();
         }
     }
+
 }
