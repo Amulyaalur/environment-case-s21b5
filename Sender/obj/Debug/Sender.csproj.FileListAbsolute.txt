@@ -5,3 +5,10 @@ F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Debug\Sender.csprojAsse
 F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Debug\Sender.csproj.CoreCompileInputs.cache
 F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Debug\Sender.exe
 F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Debug\Sender.pdb
+C:\BootCamp\environment-case-s21b5\Sender\bin\Debug\Sender.exe.config
+C:\BootCamp\environment-case-s21b5\Sender\bin\Debug\Sender.exe
+C:\BootCamp\environment-case-s21b5\Sender\bin\Debug\Sender.pdb
+C:\BootCamp\environment-case-s21b5\Sender\obj\Debug\Sender.csprojAssemblyReference.cache
+C:\BootCamp\environment-case-s21b5\Sender\obj\Debug\Sender.csproj.CoreCompileInputs.cache
+C:\BootCamp\environment-case-s21b5\Sender\obj\Debug\Sender.exe
+C:\BootCamp\environment-case-s21b5\Sender\obj\Debug\Sender.pdb

@@ -17,5 +17,6 @@ namespace Receiver
                 line = Console.ReadLine();
                 Console.WriteLine(line);
             }
+        }
     }
 }
