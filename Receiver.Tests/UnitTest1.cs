@@ -7,6 +7,21 @@ namespace Receiver.Tests
     public class UnitTest1
     {
         [Fact]
+        public void WhenSenderIsDisconnected()
+        {
+            bool failure = false;
+            try
+            {
+                var r = new Receiver();
+                r.WhenGetPropertyNames();
+            }
+            catch (TimeoutException)
+            {
+                failure = true;
+            }
+            Assert.True(failure);
+        }
+        [Fact]
         public void WhenPropertiesArePassedOnly()
         {
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);

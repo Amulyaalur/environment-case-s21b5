@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+
 namespace Receiver
 {
     public struct Properties
@@ -11,18 +13,55 @@ namespace Receiver
 
     public class Receiver
     {
+        private static readonly int TimeOutMillisecond = 15000;
+
         public readonly List<Properties> PropertiesList = new List<Properties>();
         private static string[] _propertiesNames;
         private readonly TextReader _input;
         private readonly TextWriter _output;
+
+        private readonly AutoResetEvent _getInput;
+        private readonly AutoResetEvent _gotInput;
+        private string _inputFromConsole;
+
         public Receiver() : this(Console.In, Console.Out)
         {
-
+            _getInput = new AutoResetEvent(false);
+            _gotInput = new AutoResetEvent(false);
+            var inputThread = new Thread(WhenReader) { IsBackground = true };
+            inputThread.Start();
         }
         public Receiver(TextReader input, TextWriter output)
         {
             this._input = input;
             this._output = output;
+            _getInput = new AutoResetEvent(false);
+            _gotInput = new AutoResetEvent(false);
+            var inputThread = new Thread(WhenReader) { IsBackground = true };
+            inputThread.Start();
+        }
+        private void WhenReader()
+        {
+            while (true)
+            {
+                _getInput.WaitOne();
+                _inputFromConsole = _input.ReadLine();
+                _gotInput.Set();
+            }
+        }
+
+        private string WhenReadLine()
+        {
+
+            _getInput.Set();
+            bool success = _gotInput.WaitOne(TimeOutMillisecond);
+
+            if (success)
+                return _inputFromConsole;
+            else
+                throw new TimeoutException("User did not provide input within the time limit.");
+
+
         }
         public string[] WhenSplitLine(string line)
         {
@@ -31,7 +70,7 @@ namespace Receiver
         }
         public void WhenGetPropertyNames()
         {
-            string line = _input.ReadLine();
+            string line = WhenReadLine();
             _propertiesNames = WhenSplitLine(line);
 
         }
@@ -46,14 +85,14 @@ namespace Receiver
         }
         public bool WhenGetReadingsFromSensorAndAnalyze()
         {
-            string line = _input.ReadLine();
+            string line = WhenReadLine();
 
             while (line != null && !line.Equals(""))
             {
                 var values = WhenSplitLine(line);
                 PrintOnConsole(WhenAnalyzeTemperature(values));
                 PrintOnConsole(WhenAnalyzeHumidity(values));
-                line = _input.ReadLine();
+                line = WhenReadLine();
             }
             return true;
         }
@@ -155,9 +194,14 @@ namespace Receiver
         static void Main()
         {
             Receiver r = new Receiver();
-            r.WhenGetPropertyNames();
-            r.WhenAssignIndexToProperties();
-            r.WhenGetReadingsFromSensorAndAnalyze();
+            try
+            {
+                r.WhenGetPropertyNames();
+                r.WhenAssignIndexToProperties();
+                r.WhenGetReadingsFromSensorAndAnalyze();
+            }
+            catch (TimeoutException)
+            { r._output.WriteLine("Sender is disconnected"); }
         }
     }
 }
