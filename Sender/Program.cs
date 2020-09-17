@@ -44,7 +44,7 @@ namespace Sender
             return finalDataSentToReceiver;
         }
 
-        public static string WhenReturnStringFromCsv(string datafile)
+        public static string WhenReturnStringFromCsv(string datafile,out bool success)
         {
             string s = "";
             try
@@ -57,18 +57,21 @@ namespace Sender
 
                         s += splits + "\n";
                     }
+
+                    success = true;
                 }
+                
             }
             catch (FileNotFoundException ex)
             {
                 Console.WriteLine(ex);
+                success = false;
             }
-
             return s;
         }
         static void Main()
         {
-            string datafile = "data.csv"; string data1 = WhenReturnStringFromCsv(datafile); List<string> finalData = WhenCreateDataSet(data1); WhenSendDataToReceiver(finalData);
+            string datafile = "data.csv"; string data1 = WhenReturnStringFromCsv(datafile,out _); List<string> finalData = WhenCreateDataSet(data1); WhenSendDataToReceiver(finalData);
         }
     }
 }
