@@ -19,6 +19,8 @@ namespace Receiver.Tests
             {
                 failure = true;
             }
+            catch(System.NullReferenceException)
+            {}
             Assert.True(failure);
         }
         [Fact]
