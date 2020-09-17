@@ -1,43 +1,67 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
+
 
 namespace Sender
 
 {
-    class Program
+    public class Program
 
     {
-        public static List<string> dataset = new List<string>();
-        public static List<string> SimulateDataset(String datafile)
+        public static List<string> CreateDataset(String datainstring)
         {
+            List<string> dataset = new List<string>();
+            var splits = datainstring.Split('\n');
+
+            for (int i = 0; i < splits.Length; i++)
+            {
+                if (!(WhenCheckStringEmpty(splits[i])))
+                {
+                    dataset.Add(splits[i]);
+                }
+
+            }
+
+            return dataset;
+        }
+
+        public static bool WhenCheckStringEmpty(String datainstring)
+        {
+            if ((datainstring.Equals(",,,") || datainstring.Equals("")))
+                return true;
+            return false;
+        }
+
+        public static List<string> WhenSendDataToReceiver(List<string> data)
+        {
+            List<String> finalDataSentToReceiver = new List<string>();
+            foreach (var stringInData in data)
+            {
+                Console.WriteLine(stringInData);
+                finalDataSentToReceiver.Add(stringInData);
+            }
+
+            return finalDataSentToReceiver;
+        }
+
+        public static string ReturnStringFromCSV(string datafile)
+        {
+            string s = "";
             using (var rd = new StreamReader(datafile))
             {
                 while (!rd.EndOfStream)
                 {
-                    var splits = rd.ReadLine().Split('\n');
-                    dataset.Add(splits[0]);
+                    var splits = rd.ReadLine();
+
+                    s += splits + "\n";
                 }
             }
-            return dataset;
+            return s;
         }
-
-        public static void SendDataToReceiver()
+        static void Main()
         {
-            foreach (var element in dataset)
-                Console.WriteLine(element);
-            Console.WriteLine("\n");
-        }
-        static void Main(string[] args)
-        {
-            string datafile = "data.csv";
-            SimulateDataset(datafile);
-            SendDataToReceiver();
+            string datafile = "data.csv";string data1 = ReturnStringFromCSV(datafile);List<string> finalData = CreateDataset(data1); WhenSendDataToReceiver(finalData);
         }
     }
-
 }
