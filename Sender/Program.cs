@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace Sender
 
@@ -38,6 +39,7 @@ namespace Sender
             {
                 Console.WriteLine(stringInData);
                 finalDataSentToReceiver.Add(stringInData);
+                Thread.Sleep(5000);
             }
             Console.WriteLine("\n");
 
