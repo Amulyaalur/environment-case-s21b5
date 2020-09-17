@@ -2,33 +2,31 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-
 namespace Sender
 
 {
-    public class Program
+    public static class Program
 
     {
-        public static List<string> CreateDataset(String datainstring)
+        public static List<string> WhenCreateDataSet(String dataInString)
         {
-            List<string> dataset = new List<string>();
-            var splits = datainstring.Split('\n');
+            List<string> dataSet = new List<string>();
+            var splits = dataInString.Split('\n');
 
-            for (int i = 0; i < splits.Length; i++)
+            foreach (var data in splits)
             {
-                if (!(WhenCheckStringEmpty(splits[i])))
+                if (!(WhenCheckStringEmpty(data)))
                 {
-                    dataset.Add(splits[i]);
+                    dataSet.Add(data);
                 }
 
             }
-
-            return dataset;
+            return dataSet;
         }
 
-        public static bool WhenCheckStringEmpty(String datainstring)
+        public static bool WhenCheckStringEmpty(String dataInString)
         {
-            if ((datainstring.Equals(",,,") || datainstring.Equals("")))
+            if ((dataInString.Equals(",,,") || dataInString.Equals("")))
                 return true;
             return false;
         }
@@ -46,23 +44,31 @@ namespace Sender
             return finalDataSentToReceiver;
         }
 
-        public static string ReturnStringFromCSV(string datafile)
+        public static string WhenReturnStringFromCsv(string datafile)
         {
             string s = "";
-            using (var rd = new StreamReader(datafile))
+            try
             {
-                while (!rd.EndOfStream)
+                using (var rd = new StreamReader(datafile))
                 {
-                    var splits = rd.ReadLine();
+                    while (!rd.EndOfStream)
+                    {
+                        var splits = rd.ReadLine();
 
-                    s += splits + "\n";
+                        s += splits + "\n";
+                    }
                 }
             }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine(ex);
+            }
+
             return s;
         }
         static void Main()
         {
-            string datafile = "data.csv";string data1 = ReturnStringFromCSV(datafile);List<string> finalData = CreateDataset(data1); WhenSendDataToReceiver(finalData);
+            string datafile = "data.csv"; string data1 = WhenReturnStringFromCsv(datafile); List<string> finalData = WhenCreateDataSet(data1); WhenSendDataToReceiver(finalData);
         }
     }
 }
