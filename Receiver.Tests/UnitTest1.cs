@@ -23,7 +23,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenInputIsCorrect()
         {
-            Receiver r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n37C,50%,15 - 09 - 2020,11:10am\n32C,20%,15-09-2020,12:10pm\n\n"), Console.Out);
+            Receiver r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n37C,50%,15-09-2020,11:10am\n32C,20%,15-09-2020,12:10pm\n\n"), Console.Out);
 
             r.GetPropertyNames();
             r.AssignIndexToProperties();
@@ -83,7 +83,7 @@ namespace Receiver.Tests
             r.AssignIndexToProperties();
             string[] values;
             values = r.SplitLine("2C,71%,15-09-2020,1:10pm");
-            Assert.True(r.AnalyzeHumidity(values).Equals("Humidity reached Warnig level:71%"));
+            Assert.True(r.AnalyzeHumidity(values).Equals("Humidity reached Warning level:71%"));
         }
         [Fact]
         public void WhenHumidityReachedErrorLevelThenAlert()

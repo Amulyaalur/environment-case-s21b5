@@ -147,7 +147,7 @@ namespace Receiver
             }
             else if (int.Parse((values[index].Split('%'))[0]) > 70)
             {
-                return "Humidity reached Warnig level:" + values[index].ToString();
+                return "Humidity reached Warning level:" + values[index].ToString();
             }
             return null;
         }
