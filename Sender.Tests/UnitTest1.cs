@@ -7,7 +7,7 @@ namespace Sender.Tests
         [Fact]
         public void WhenCsVisReadThenCheckStringOutput()
         {
-            var datafile = "dataForUnitTest.csv";
+            var datafile = "D:/a/environment-case-s21b5/environment-case-s21b5/dataForUnitTest.csv";
             var stringOutput = Program.WhenReturnStringFromCsv(datafile,out _);
             Assert.True(stringOutput.Equals(
                 "Temperature,Humidity,Date,Time\n37C,50%,15-09-2020,11:10am\n,,,\n32C,20%,15-09-2020,12:10pm\n,,,\n40C,70%,15-09-2020,1:10pm\n42C,20%,15-09-2020,2:10pm\n"));
