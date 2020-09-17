@@ -41,6 +41,7 @@ namespace Sender
                 Console.WriteLine(stringInData);
                 finalDataSentToReceiver.Add(stringInData);
             }
+            Console.WriteLine("\n");
 
             return finalDataSentToReceiver;
         }
