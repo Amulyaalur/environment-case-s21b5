@@ -34,19 +34,32 @@ namespace Sender
 
         public static List<string> WhenSendDataToReceiver(List<string> data)
         {
+            int count = 0;
             List<String> finalDataSentToReceiver = new List<string>();
             foreach (var stringInData in data)
             {
-                Console.WriteLine(stringInData);
-                finalDataSentToReceiver.Add(stringInData);
+                if (count > 0)
+                {
+                    DateTime now = DateTime.Now;
+                    Console.Write(stringInData);
+                    Console.Write("," + now.ToShortDateString());
+                    Console.WriteLine("," + now.ToShortTimeString());
+                }
+                else
+                {
+                    Console.WriteLine(stringInData);
+                }
+
+                count++;
                 Thread.Sleep(5000);
+                finalDataSentToReceiver.Add(stringInData);
             }
             Console.WriteLine("\n");
 
             return finalDataSentToReceiver;
         }
 
-        public static string WhenReturnStringFromCsv(string datafile,out bool success)
+        public static string WhenReturnStringFromCsv(string datafile, out bool success)
         {
             string s = "";
             try
@@ -62,7 +75,7 @@ namespace Sender
 
                     success = true;
                 }
-                
+
             }
             catch (FileNotFoundException ex)
             {
@@ -73,7 +86,7 @@ namespace Sender
         }
         static void Main()
         {
-            string datafile = "data.csv"; string data1 = WhenReturnStringFromCsv(datafile,out _); List<string> finalData = WhenCreateDataSet(data1); WhenSendDataToReceiver(finalData);
+            string datafile = "data.csv"; string data1 = WhenReturnStringFromCsv(datafile, out _); List<string> finalData = WhenCreateDataSet(data1); WhenSendDataToReceiver(finalData);
         }
     }
 }
