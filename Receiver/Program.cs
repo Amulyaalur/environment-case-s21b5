@@ -164,14 +164,10 @@ namespace Receiver
         static void Main()
         {
             Receiver r = new Receiver(); try
-            { 
-                r.WhenGetPropertyNamesThenSetPropertyNames();
+            { r.WhenGetPropertyNamesThenSetPropertyNames();
                 r.WhenWantToAssignIndexToProperties();
-                r.WhenGetReadingsFromSensorThenAnalyze();
-            }
+                r.WhenGetReadingsFromSensorThenAnalyze(); }
             catch (TimeoutException) { r.AlertStaticObj.PrintOnConsole("Sender is disconnected"); }
-
-
         }
     }
 }

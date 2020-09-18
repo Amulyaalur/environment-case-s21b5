@@ -4,6 +4,7 @@ namespace Sender.Tests
 {
     public class UnitTest1
     {
+        
         [Fact]
         public void WhenCsVisReadThenCheckStringOutput()
         {
@@ -12,7 +13,7 @@ namespace Sender.Tests
             Assert.True(stringOutput.Equals(
                 "Temperature,Humidity,Date,Time\n37C,50%\n,,,\n32C,20%\n,,,\n40C,70%\n42C,20%\n"));
         }
-
+        
         [Fact]
         public void WhenParametersAreSentOnlyThenCheckOutput()
         {
