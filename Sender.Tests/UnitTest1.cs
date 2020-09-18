@@ -7,16 +7,16 @@ namespace Sender.Tests
         [Fact]
         public void WhenCsVisReadThenCheckStringOutput()
         {
-            var datafile = "D:/a/environment-case-s21b5/environment-case-s21b5/dataForUnitTest.csv";
-            var stringOutput = Program.WhenReturnStringFromCsv(datafile,out _);
+            var datafile = "C:/BootCamp/environment-case-s21b5/dataForUnitTest.csv";
+            var stringOutput = ReadCsv.WhenReturnStringFromCsv(datafile,out _);
             Assert.True(stringOutput.Equals(
-                "Temperature,Humidity,Date,Time\n37C,50%,15-09-2020,11:10am\n,,,\n32C,20%,15-09-2020,12:10pm\n,,,\n40C,70%,15-09-2020,1:10pm\n42C,20%,15-09-2020,2:10pm\n"));
+                "Temperature,Humidity,Date,Time\n37C,50%\n,,,\n32C,20%\n,,,\n40C,70%\n42C,20%\n"));
         }
 
         [Fact]
         public void WhenParametersAreSentOnlyThenCheckOutput()
         {
-            var finalData = Program.WhenCreateDataSet("Temperature, Humidity, Date, Time");
+            var finalData = FilterCsvData.WhenCreateDataSet("Temperature, Humidity, Date, Time");
 
             Assert.True(finalData[0].Equals("Temperature, Humidity, Date, Time"));
         }
@@ -24,7 +24,7 @@ namespace Sender.Tests
         [Fact]
         public void WhenInputIsEmptyThenDoNotAddItToOutput()
         {
-            var finalDatas = Program.WhenCreateDataSet(",,,");
+            var finalDatas = FilterCsvData.WhenCreateDataSet(",,,");
 
             Assert.True(finalDatas.Count == 0);
         }
@@ -33,7 +33,7 @@ namespace Sender.Tests
         public void WhenSendDataToReceiverThenValidateSentOutput()
         {
             var finalData =
-                Program.WhenCreateDataSet("Temperature,Humidity,Date,Time\n37C,50%,15-09-2020,11:10am\n,,,\n");
+                FilterCsvData.WhenCreateDataSet("Temperature,Humidity,Date,Time\n37C,50%,15-09-2020,11:10am\n,,,\n");
             var finalDataSent = Program.WhenSendDataToReceiver(finalData);
             Assert.True(finalDataSent[0].Equals("Temperature,Humidity,Date,Time"));
             Assert.True(finalDataSent[1].Equals("37C,50%,15-09-2020,11:10am"));
@@ -43,7 +43,7 @@ namespace Sender.Tests
         [Fact]
         public void WhenStringIsEmptyThenReturnTrue()
         {
-            var emptyOrNot = Program.WhenCheckStringEmpty(",,,");
+            var emptyOrNot = FilterCsvData.WhenCheckStringEmpty(",,,");
             Assert.True(emptyOrNot);
         }
 
@@ -52,9 +52,23 @@ namespace Sender.Tests
         {
 
             string datafile = "FileNotPresent.csv";
-            Program.WhenReturnStringFromCsv(datafile,out bool status);
+            ReadCsv.WhenReturnStringFromCsv(datafile,out bool status);
             Assert.False(status);
             
         }
+
+        [Fact]
+        public void WhenDataIsCreatedDynamicallyThenCheckValidDataIsSent()
+        {
+
+            Assert.True(DynamicData.WhenSendDynamicDataToReceiver(2,true));
+        }
+
+        [Fact]
+        public void WhenCsvFileNotPresentSendDynamicDataToReceiver()
+        {
+            Assert.True(DynamicData.WhenSendDynamicDataToReceiver(2, false));
+        }
     }
+
 }
