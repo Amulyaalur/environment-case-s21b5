@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-
 namespace Receiver
 {
     public struct Properties
@@ -10,71 +8,44 @@ namespace Receiver
         public string PropertyName;
 
     }
-
+    public class PropertyNotFoundException : Exception
+    {
+        public PropertyNotFoundException(string message) : base(message)
+        {
+        }
+    }
     public class Receiver
     {
-        private static readonly int TimeOutMillisecond = 15000;
-
         public readonly List<Properties> PropertiesList = new List<Properties>();
         private static string[] _propertiesNames;
-        private readonly TextReader _input;
-        private readonly TextWriter _output;
-
-        private readonly AutoResetEvent _getInput;
-        private readonly AutoResetEvent _gotInput;
-        private string _inputFromConsole;
-
-        public Receiver() : this(Console.In, Console.Out)
+        private readonly Reader _reader;
+        public Alert AlertStaticObj;
+        public Receiver()
         {
-            _getInput = new AutoResetEvent(false);
-            _gotInput = new AutoResetEvent(false);
-            var inputThread = new Thread(WhenReader) { IsBackground = true };
-            inputThread.Start();
+            _reader = new Reader();
+            AlertStaticObj = new Alert();
         }
         public Receiver(TextReader input, TextWriter output)
         {
-            this._input = input;
-            this._output = output;
-            _getInput = new AutoResetEvent(false);
-            _gotInput = new AutoResetEvent(false);
-            var inputThread = new Thread(WhenReader) { IsBackground = true };
-            inputThread.Start();
+            _reader = new Reader(input);
+            AlertStaticObj = new Alert(output);
         }
-        private void WhenReader()
+
+        public void WhenSetAlerterMock()
         {
-            while (true)
-            {
-                _getInput.WaitOne();
-                _inputFromConsole = _input.ReadLine();
-                _gotInput.Set();
-            }
+            AlertStaticObj = new AlertChild();
         }
-
-        private string WhenReadLine()
-        {
-
-            _getInput.Set();
-            bool success = _gotInput.WaitOne(TimeOutMillisecond);
-
-            if (success)
-                return _inputFromConsole;
-            else
-                throw new TimeoutException("User did not provide input within the time limit.");
-
-
-        }
-        public string[] WhenSplitLine(string line)
+        public string[] WhenToSplitLine(string line)
         {
             string[] split = line.Split(',');
             return split;
         }
-        public void WhenGetPropertyNames()
+        public void WhenGetPropertyNamesThenSetPropertyNames()
         {
-            string line = WhenReadLine();
-            _propertiesNames = WhenSplitLine(line);
-
+            string line = _reader.WhenReadLine();
+            _propertiesNames = WhenToSplitLine(line);
         }
-        public void WhenAssignIndexToProperties()
+        public void WhenWantToAssignIndexToProperties()
         {
             foreach (var t in _propertiesNames)
             {
@@ -83,16 +54,15 @@ namespace Receiver
                 PropertiesList.Add(temp);
             }
         }
-        public bool WhenGetReadingsFromSensorAndAnalyze()
+        public bool WhenGetReadingsFromSensorThenAnalyze()
         {
-            string line = WhenReadLine();
-
+            string line = _reader.WhenReadLine();
             while (line != null && !line.Equals(""))
             {
-                var values = WhenSplitLine(line);
-                PrintOnConsole(WhenAnalyzeTemperature(values));
-                PrintOnConsole(WhenAnalyzeHumidity(values));
-                line = WhenReadLine();
+                var values = WhenToSplitLine(line);
+                WhenAnalyzeTemperature(values);
+                WhenAnalyzeHumidity(values);
+                line = _reader.WhenReadLine();
             }
             return true;
         }
@@ -106,102 +76,102 @@ namespace Receiver
                 {
                     id = index;
                     break;
-
                 }
                 index++;
             }
             return id;
         }
-        public string WhenAnalyzeTemperature(string[] values)
-        {
-            int index = WhenGetIndex("Temperature");
-            if (index >= 0)
-            {
-                return WhenAlertTemperatureIfOutOfLimits(values, index);
 
+        private string WhenWantValueOfProperty(string property, string[] values)
+        {
+            int index = WhenGetIndex(property);
+            if (index == -1)
+                throw (new PropertyNotFoundException("CSV does not contain " + property + " property."));
+            return values[index];
+        }
+        public void WhenAnalyzeTemperature(string[] values)
+        {
+            try
+            {
+                string valueInString = WhenWantValueOfProperty("Temperature", values);
+                WhenTemperatureIsOutOfLimitsThenAlert(valueInString, values);
+            }
+            catch (PropertyNotFoundException e)
+            {
+                AlertStaticObj.PrintOnConsole(e.Message);
+            }
+        }
+        private void WhenTemperatureIsOutOfLimitsThenAlert(string valueInString, string[] values)
+        {
+            int valueInInt = int.Parse((valueInString.Split('C'))[0]);
+            if (valueInInt > 37)
+            {
+                WhenWantToAlertForHighLimitsForTemperature(valueInInt, values);
+            }
+            else if (valueInInt < 4)
+            {
+                WhenWantToAlertForLowerLimitsForTemperature(valueInInt, values);
+            }
+        }
+        void WhenWantToAlertForHighLimitsForTemperature(int valueInInt, string[] values)
+        {
+            if (valueInInt > 40)
+            {
+                AlertStaticObj.PrintOnConsole("Temperature reached High Error level:" + valueInInt.ToString() + "C at " + WhenWantValueOfProperty("Time", values) + " on " + WhenWantValueOfProperty("Date", values));
             }
             else
             {
-                return "CSV does not contain Temperature property.";
+                AlertStaticObj.PrintOnConsole("Temperature reached High Warning level:" + valueInInt.ToString() + "C at " + WhenWantValueOfProperty("Time", values) + " on " + WhenWantValueOfProperty("Date", values));
+            }
+        }
+        void WhenWantToAlertForLowerLimitsForTemperature(int valueInInt, string[] values)
+        {
+            if (valueInInt < 0)
+            {
+                AlertStaticObj.PrintOnConsole("Temperature reached Low Error level:" + valueInInt.ToString() + "C at " + WhenWantValueOfProperty("Time", values) + " on " + WhenWantValueOfProperty("Date", values));
+            }
+            else
+            {
+                AlertStaticObj.PrintOnConsole("Temperature reached Low Warning level:" + valueInInt.ToString() + "C at " + WhenWantValueOfProperty("Time", values) + " on " + WhenWantValueOfProperty("Date", values));
+            }
+        }
+        public void WhenAnalyzeHumidity(string[] values)
+        {
+            try
+            {
+                string valueInString = WhenWantValueOfProperty("Humidity", values);
+                WhenHumidityIsOutOfLimitsThenAlert(valueInString, values);
+            }
+            catch (PropertyNotFoundException e)
+            {
+                AlertStaticObj.PrintOnConsole(e.Message);
+            }
+        }
+        void WhenHumidityIsOutOfLimitsThenAlert(string valueInString, string[] values)
+        {
+            int valueInInt = int.Parse((valueInString.Split('%'))[0]);
+            if (valueInInt > 90)
+            {
+                AlertStaticObj.PrintOnConsole("Humidity reached Error level:" + valueInString + " at " + WhenWantValueOfProperty("Time", values) + " on " + WhenWantValueOfProperty("Date", values));
+            }
+            else if (valueInInt > 70)
+            {
+                AlertStaticObj.PrintOnConsole("Humidity reached Warning level:" + valueInString + " at " + WhenWantValueOfProperty("Time", values) + " on " + WhenWantValueOfProperty("Date", values));
             }
 
-        }
-        private string WhenAlertTemperatureIfOutOfLimits(string[] values, int index)
-        {
-            if (int.Parse((values[index].Split('C'))[0]) > 37)
-            {
-                return AlertForHighLimitsForTemperature(values, index);
-            }
-            else if (int.Parse((values[index].Split('C'))[0]) < 4)
-            {
-                return AlertForLowerLimitsForTemperature(values, index);
-            }
-            return null;
-        }
-        string AlertForHighLimitsForTemperature(string[] values, int index)
-        {
-            if (int.Parse((values[index].Split('C'))[0]) > 40)
-            {
-                return "Temperature reached High Error level:" + values[index];
-            }
-            else
-            {
-                return "Temperature reached High Warning level:" + values[index];
-            }
-        }
-        string AlertForLowerLimitsForTemperature(string[] values, int index)
-        {
-            if (int.Parse((values[index].Split('C'))[0]) < 0)
-            {
-                return "Temperature reached Low Error level:" + values[index];
-            }
-            else
-            {
-                return "Temperature reached Low Warning level:" + values[index];
-            }
-        }
-        public string WhenAnalyzeHumidity(string[] values)
-        {
-            int index = WhenGetIndex("Humidity");
-            if (index >= 0)
-            {
-                return AlertHumidityIfOutOfLimits(values, index);
-
-            }
-            else
-            {
-                return "CSV does not contain Humidity property.";
-            }
-        }
-        string AlertHumidityIfOutOfLimits(string[] values, int index)
-        {
-            if (int.Parse((values[index].Split('%'))[0]) > 90)
-            {
-                return "Humidity reached Error level:" + values[index];
-            }
-            else if (int.Parse((values[index].Split('%'))[0]) > 70)
-            {
-                return "Humidity reached Warning level:" + values[index];
-            }
-            return null;
-        }
-        public void PrintOnConsole(string message)
-        {
-            if (message != null)
-                _output.WriteLine(message);
         }
 
         static void Main()
         {
-            Receiver r = new Receiver();
-            try
-            {
-                r.WhenGetPropertyNames();
-                r.WhenAssignIndexToProperties();
-                r.WhenGetReadingsFromSensorAndAnalyze();
+            Receiver r = new Receiver(); try
+            { 
+                r.WhenGetPropertyNamesThenSetPropertyNames();
+                r.WhenWantToAssignIndexToProperties();
+                r.WhenGetReadingsFromSensorThenAnalyze();
             }
-            catch (TimeoutException)
-            { r._output.WriteLine("Sender is disconnected"); }
+            catch (TimeoutException) { r.AlertStaticObj.PrintOnConsole("Sender is disconnected"); }
+
+
         }
     }
 }
