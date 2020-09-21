@@ -196,10 +196,8 @@ namespace EnvironmentMonitor
         static void Main()
         {
             EnvironmentMonitor r = new EnvironmentMonitor(); try
-            {
-                r.WhenGetPropertyNamesThenSetPropertyNames();
-                r.WhenGetReadingsFromSensorThenAnalyze();
-            }
+            { r.WhenGetPropertyNamesThenSetPropertyNames();
+                r.WhenGetReadingsFromSensorThenAnalyze(); }
             catch (TimeoutException) { r.AlertStaticObj.PrintOnConsole("Sensor is disconnected"); }
         }
     }
