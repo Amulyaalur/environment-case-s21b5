@@ -42,7 +42,7 @@ namespace Sender
         {
            
                 string datafile = "data.csv"; string filterdata = ReadCsv.WhenReturnStringFromCsv(datafile,out bool csvpresentflag); List<string> finalData = FilterCsvData.WhenCreateDataSet(filterdata); WhenSendDataToReceiver(finalData);
-                DynamicData.WhenSendDynamicDataToReceiver(2, csvpresentflag);
+                DynamicData.WhenSendDynamicDataToReceiver(10, csvpresentflag);
         }
     }
 }
