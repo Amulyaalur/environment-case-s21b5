@@ -11,9 +11,9 @@ function WriteXmlToScreen ([xml]$xml)
     Write-Output $StringWriter.ToString();
 }
 
-$report_of_sender = Get-Content -Path  Sender.Tests\TestResults\*\coverage.cobertura.xml | Out-String
+$report_of_sender = Get-Content -Path  Sensor.Tests\TestResults\*\coverage.cobertura.xml | Out-String
 Write-Host "---------------------------------"
-Write-Host "Code Coverage report of SenderTest ..." 
+Write-Host "Code Coverage report of SensorTest ..." 
 Write-Host "---------------------------------"
 WriteXmlToScreen $report_of_sender
 
@@ -21,7 +21,7 @@ WriteXmlToScreen $report_of_sender
 
 Write-Host ""
 Write-Host "---------------------------------"
-Write-Host "Code Coverage report of SenderTest Analysis..." 
+Write-Host "Code Coverage report of SensorTest Analysis..." 
 Write-Host "---------------------------------"
 
 $result_sender = 0
@@ -37,9 +37,9 @@ Write-Host ""
     }
 
 
-$report_of_receiver = Get-Content -Path  Receiver.Tests\TestResults\*\coverage.cobertura.xml | Out-String
+$report_of_receiver = Get-Content -Path  EnvironmentMonitor.Tests\TestResults\*\coverage.cobertura.xml | Out-String
 Write-Host "---------------------------------"
-Write-Host "Code Coverage report of ReceiverTest ..." 
+Write-Host "Code Coverage report of EnvironmentMonitorTest ..." 
 Write-Host "---------------------------------"
 WriteXmlToScreen $report_of_receiver
 
@@ -47,7 +47,7 @@ WriteXmlToScreen $report_of_receiver
 
 Write-Host ""
 Write-Host "---------------------------------"
-Write-Host "Code Coverage report of ReceiverTest Analysis..." 
+Write-Host "Code Coverage report of EnvironmentMonitorTest Analysis..." 
 Write-Host "---------------------------------"
 
 $result_receiver = 0
