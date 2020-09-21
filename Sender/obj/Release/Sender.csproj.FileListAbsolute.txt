@@ -1,7 +1,0 @@
-F:\visualstudioprojects\EnvironmentMonitoring\Sender\bin\Release\Sender.exe.config
-F:\visualstudioprojects\EnvironmentMonitoring\Sender\bin\Release\Sender.exe
-F:\visualstudioprojects\EnvironmentMonitoring\Sender\bin\Release\Sender.pdb
-F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Release\Sender.csprojAssemblyReference.cache
-F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Release\Sender.csproj.CoreCompileInputs.cache
-F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Release\Sender.exe
-F:\visualstudioprojects\EnvironmentMonitoring\Sender\obj\Release\Sender.pdb
