@@ -1,20 +1,26 @@
-﻿using System.IO;
+﻿/*
+ Reads the CSV file and converts it to String
+ */
+using System.IO;
 
 
 namespace Sender
 {
     public static class ReadCsv
     {
+        /*
+         return: Data in string format which is read from CSV file.
+         */
         public static string WhenReturnStringFromCsv(string datafile,out bool success)
         {
             string s = "";
             try
             {
-                using (var rd = new StreamReader(datafile))
+                using (var read = new StreamReader(datafile))
                 {
-                    while (!rd.EndOfStream)
+                    while (!read.EndOfStream)
                     {
-                        var splits = rd.ReadLine();
+                        var splits = read.ReadLine();
 
                         s += splits + "\n";
                     }
