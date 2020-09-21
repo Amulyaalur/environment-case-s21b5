@@ -1,9 +1,19 @@
+﻿/*
+ * Receives data from sensor and analyzes it
+ * And alerts user according to the result
+ *
+ * Properties are stored in List so that
+ * 1.we don't need to add index as 0 every where for getting property value
+ * 2.If sensor sends data in different order we don't need to change the index value
+ */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
-namespace Receiver
+
+
+namespace EnvironmentMonitor
 {
-    //struct properties to store properties by property name
     public struct Properties
     {
         public string PropertyName;
@@ -15,30 +25,30 @@ namespace Receiver
         {
         }
     }
-    public class Receiver
+    public class EnvironmentMonitor
     {
         //List of properties containing property in properties structure
         public readonly List<Properties> PropertiesList = new List<Properties>();
 
-        //reader is object to handle read line method
+        //reader is class to handle read line method
         private readonly Reader _reader;
 
         //alert is class to handle write line method
         public Alert AlertStaticObj;
-        public Receiver()
+        public EnvironmentMonitor()
         {
             _reader = new Reader();
             AlertStaticObj = new Alert();
         }
-        public Receiver(TextReader input, TextWriter output)
+        public EnvironmentMonitor(TextReader input, TextWriter output)
         {
             _reader = new Reader(input);
             AlertStaticObj = new Alert(output);
         }
-        //when we want to send output to x unit test then MockAlerter is used
+        //when to send output to x unit test then MockAlerter is used
         public void WhenSetAlerterMock()
         {
-            AlertStaticObj = new AlertChild();
+            AlertStaticObj = new AlertMock();
         }
         public string[] WhenToSplitLine(string line)
         {
@@ -86,6 +96,7 @@ namespace Receiver
             return id;
         }
 
+        //return value of property
         private string WhenWantValueOfProperty(string property, string[] values)
         {
             int index = WhenGetIndex(property);
@@ -181,14 +192,15 @@ namespace Receiver
 
         }
 
+        //Controls receiver
         static void Main()
         {
-            Receiver r = new Receiver(); try
+            EnvironmentMonitor r = new EnvironmentMonitor(); try
             {
                 r.WhenGetPropertyNamesThenSetPropertyNames();
                 r.WhenGetReadingsFromSensorThenAnalyze();
             }
-            catch (TimeoutException) { r.AlertStaticObj.PrintOnConsole("Sender is disconnected"); }
+            catch (TimeoutException) { r.AlertStaticObj.PrintOnConsole("Sensor is disconnected"); }
         }
     }
 }

@@ -18,6 +18,6 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Run Application
-      run: Sender\bin\Release\Sender.exe | Receiver\bin\Release\Receiver.exe
+      run: Sensor\bin\Release\Sensor.exe | EnvironmentMonitor\bin\Release\EnvironmentMonitor.exe
     - name: Run unit tests
       run: dotnet test --no-build --configuration Release

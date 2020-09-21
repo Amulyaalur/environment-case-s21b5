@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Receiver\Receiver.csproj" />
+    <ProjectReference Include="..\Sensor\Sensor.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Xunit;
 
-namespace Receiver.Tests
+namespace EnvironmentMonitor.Tests
 {
 
     public class UnitTest1
@@ -10,7 +10,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenPropertiesArePassedOnly()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
 
             r.WhenGetPropertyNamesThenSetPropertyNames();
             Assert.True(r.PropertiesList[0].PropertyName.Equals("Temperature"));
@@ -22,7 +22,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenInputIsCorrect()
         {
-            var r = new Receiver(
+            var r = new EnvironmentMonitor(
                 new StringReader(
                     "Temperature,Humidity,Date,Time\n37C,50%,15-09-2020,11:10am\n32C,20%,15-09-2020,12:10pm\n\n"),
                 Console.Out);
@@ -36,7 +36,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenTempInHighWarningLimitThenAlert()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n40C,70%,15-09-2020,1:10pm\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n40C,70%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             r.WhenGetReadingsFromSensorThenAnalyze();
@@ -46,7 +46,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenTempInHighErrorLimitThenAlert()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n41C,70%,15-09-2020,1:10pm\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n41C,70%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             r.WhenGetReadingsFromSensorThenAnalyze();
@@ -56,7 +56,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenTempInLowWarningLimitThenAlert()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n2C,70%,15-09-2020,1:10pm\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n2C,70%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             r.WhenGetReadingsFromSensorThenAnalyze();
@@ -66,7 +66,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenTempInLowErrorLimitThenAlert()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n-1C,70%,15-09-2020,1:10pm\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n-1C,70%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             r.WhenGetReadingsFromSensorThenAnalyze();
@@ -76,7 +76,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenHumidityReachedWarningLevelThenAlert()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n10C,71%,15-09-2020,1:10pm\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n10C,71%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             r.WhenGetReadingsFromSensorThenAnalyze();
@@ -87,7 +87,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenHumidityReachedErrorLevelThenAlert()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n10C,91%,15-09-2020,1:10pm\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n10C,91%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             r.WhenGetReadingsFromSensorThenAnalyze();
@@ -97,7 +97,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenTemperatureInLimitThenNoAlert()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             var values = r.WhenToSplitLine("20C,60%,15-09-2020,1:10pm");
@@ -108,7 +108,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenHumidityInLimitThenNoAlert()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n10C,50%,15-09-2020,1:10pm\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n10C,50%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             r.WhenGetReadingsFromSensorThenAnalyze();
@@ -118,7 +118,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenTemperaturePropertyNotProvidedBySenderThenPromptUser()
         {
-            var r = new Receiver(new StringReader("Humidity,Date,Time\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Humidity,Date,Time\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             var values = r.WhenToSplitLine("50%,15-09-2020,1:10pm");
@@ -129,7 +129,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenHumidityPropertyNotProvidedBySenderThenPromptUser()
         {
-            var r = new Receiver(new StringReader("Temperature,Date,Time\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Date,Time\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             var values = r.WhenToSplitLine("50C,15-09-2020,1:10pm");
@@ -139,7 +139,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenDatePropertyNotProvidedBySenderThenPromptUser()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Time\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Time\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             var values = r.WhenToSplitLine("50C,50%,1:10pm");
@@ -149,7 +149,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenTimePropertyNotProvidedBySenderThenPromptUser()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             var values = r.WhenToSplitLine("50C,50%,15-09-2020");
@@ -160,7 +160,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenTemperatureValueIsNotProvidedBySenderThenPromptUser()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             var values = r.WhenToSplitLine("NA,50%,12-9-2019,11:10am");
@@ -170,7 +170,7 @@ namespace Receiver.Tests
         [Fact]
         public void WhenHumidityValueIsNotProvidedBySenderThenPromptUser()
         {
-            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
+            var r = new EnvironmentMonitor(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
             var values = r.WhenToSplitLine("41C,NA,12-9-2019,11:10am");
@@ -186,7 +186,7 @@ namespace Receiver.Tests
             alerter.PrintOnConsole("Environment Monitoring");
             Alert alerter2 = new Alert(Console.Out);
             alerter2.PrintOnConsole("Environment Monitoring");
-            Receiver r = new Receiver();
+            EnvironmentMonitor r = new EnvironmentMonitor();
             r.WhenSetAlerterMock();
         }
 
@@ -198,7 +198,7 @@ namespace Receiver.Tests
             bool failure = false;
             try
             {
-                var r = new Receiver();
+                var r = new EnvironmentMonitor();
                 r.WhenGetPropertyNamesThenSetPropertyNames();
             }
             catch (TimeoutException)

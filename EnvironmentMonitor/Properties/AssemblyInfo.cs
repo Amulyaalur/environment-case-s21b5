@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Receiver")]
+[assembly: AssemblyTitle("EnvironmentMonitor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Hewlett-Packard")]
-[assembly: AssemblyProduct("Receiver")]
+[assembly: AssemblyProduct("EnvironmentMonitor")]
 [assembly: AssemblyCopyright("Copyright © Hewlett-Packard 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("01af5815-c5d6-4db0-9f03-e85a0da1c756")]
+[assembly: Guid("59af12ef-e225-49bf-bcc0-fa5ec6a6f30e")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,17 +1,17 @@
 ﻿/*
  Reads the CSV file and converts it to String
  */
+
 using System.IO;
 
-
-namespace Sender
+namespace Sensor
 {
     public static class ReadCsv
     {
         /*
          return: Data in string format which is read from CSV file.
          */
-        public static string WhenReturnStringFromCsv(string datafile,out bool success)
+        public static string WhenReturnStringFromCsv(string datafile, out bool success)
         {
             string s = "";
             try

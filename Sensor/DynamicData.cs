@@ -1,18 +1,18 @@
 ﻿/*
  Includes a Method that sends Dynamic data to Receiver
  */
+
 using System;
 using System.Threading;
 
-
-namespace Sender
+namespace Sensor
 {
-   public static class DynamicData
+    public static class DynamicData
     {
         /*
         Sends Randomly generated data to Receiver.
          */
-        public static bool WhenSendDynamicDataToReceiver(int cycle,bool filepass)
+        public static bool WhenSendDynamicDataToReceiver(int cycle, bool filepass)
         {
             Random randomData = new Random();
             if (filepass == false)
@@ -22,13 +22,13 @@ namespace Sender
 
             for (int i = 0; i < cycle; i++)
             {
-                var temperature = randomData.Next(200)-100;
+                var temperature = randomData.Next(200) - 100;
                 var humidity = randomData.Next(100);
-                Thread.Sleep(5000);
+                Thread.Sleep(Program.PeriodicTime);
                 Console.Write(temperature.ToString() + "C" + "," + humidity.ToString() + "%");
                 Program.WhenFetchCurrentDateTime();
             }
-            Console.WriteLine("\n");
+            
             return true;
         }
     }

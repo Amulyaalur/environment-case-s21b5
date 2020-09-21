@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using Xunit;
 
-namespace Sender.Tests
+namespace Sensor.Tests
 {
     public class UnitTest1
     {
@@ -10,7 +9,8 @@ namespace Sender.Tests
         public void WhenCsVisReadThenCheckStringOutput()
         {
             var datafile = "D:/a/environment-case-s21b5/environment-case-s21b5/dataForUnitTest.csv";
-            var stringOutput = ReadCsv.WhenReturnStringFromCsv(datafile,out _);
+            //var datafile = "C:/Users/Ajinkya/git repo/environment-case-s21b5/dataForUnitTest.csv";
+            var stringOutput = ReadCsv.WhenReturnStringFromCsv(datafile, out _);
             Assert.True(stringOutput.Equals(
                 "Temperature,Humidity,Date,Time\n37C,50%\n,\n32C,20%\n,\n40C,70%\n42C,20%\n"));
         }
@@ -54,16 +54,16 @@ namespace Sender.Tests
         {
 
             string datafile = "FileNotPresent.csv";
-            ReadCsv.WhenReturnStringFromCsv(datafile,out bool status);
+            ReadCsv.WhenReturnStringFromCsv(datafile, out bool status);
             Assert.False(status);
-            
+
         }
 
         [Fact]
         public void WhenDataIsCreatedDynamicallyThenCheckValidDataIsSent()
         {
 
-            Assert.True(DynamicData.WhenSendDynamicDataToReceiver(2,true));
+            Assert.True(DynamicData.WhenSendDynamicDataToReceiver(2, true));
         }
 
         [Fact]
@@ -75,23 +75,20 @@ namespace Sender.Tests
         [Fact]
         public void WhenInputIsCompletelyEmptyThenDontSendData()
         {
-            List<string> data = new List<string>();
-            data = FilterCsvData.WhenCreateDataSet("Temperature,Humidity,Date,Time\n\n");
-            Assert.True(data.Count==1);
+            var data = FilterCsvData.WhenCreateDataSet("Temperature,Humidity,Date,Time\n\n");
+            Assert.True(data.Count == 1);
             Assert.True(data[0].Equals("Temperature,Humidity,Date,Time"));
         }
         [Fact]
         public void WhenTemperatureIsEmptyThenReplaceWithNa()
         {
-            List<string> data = new List<string>();
-            data = FilterCsvData.WhenCreateDataSet("Temperature,Humidity,Date,Time\n,30%\n");
+            var data = FilterCsvData.WhenCreateDataSet("Temperature,Humidity,Date,Time\n,30%\n");
             Assert.True(data[1].Equals("NA,30%"));
         }
         [Fact]
         public void WhenHumidityIsEmptyThenReplaceWithNa()
         {
-            List<string> data = new List<string>();
-            data = FilterCsvData.WhenCreateDataSet("Temperature,Humidity,Date,Time\n45C,\n");
+            var data = FilterCsvData.WhenCreateDataSet("Temperature,Humidity,Date,Time\n45C,\n");
             Assert.True(data[1].Equals("45C,NA"));
         }
 
@@ -100,8 +97,7 @@ namespace Sender.Tests
         [InlineData("Temperature,Humidity,Date,Time\n-800C,30%\n")]
         public void WhenTemperatureIsOutOfIdealLimitsThenReplaceWithNa(string inputData)
         {
-            List<string> data = new List<string>();
-            data = FilterCsvData.WhenCreateDataSet(inputData);
+            var data = FilterCsvData.WhenCreateDataSet(inputData);
             Assert.True(data[1].Equals("NA,30%"));
         }
 

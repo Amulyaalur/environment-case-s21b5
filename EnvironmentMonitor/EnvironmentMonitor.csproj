@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AA1E84E0-3555-469A-B548-16833DAEEFE3}</ProjectGuid>
+    <ProjectGuid>{59AF12EF-E225-49BF-BCC0-FA5EC6A6F30E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Sender</RootNamespace>
-    <AssemblyName>Sender</AssemblyName>
+    <RootNamespace>EnvironmentMonitor</RootNamespace>
+    <AssemblyName>EnvironmentMonitor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,11 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicData.cs" />
-    <Compile Include="FilterCsvData.cs" />
+    <Compile Include="Alert.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadCsv.cs" />
+    <Compile Include="Reader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

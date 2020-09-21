@@ -1,11 +1,16 @@
-﻿using System;
+﻿/*
+ * Responsible for reading console input and if input is not given for timeout limit then it throws an TimeoutException
+ */
+
+using System;
 using System.IO;
 using System.Threading;
-namespace Receiver
+
+namespace EnvironmentMonitor
 {
     class Reader
     {
-        private static readonly int TimeOutMillisecond = 15000;
+        private static readonly int TimeOutMillisecond = 10000;
         private readonly TextReader _input;
         private readonly AutoResetEvent _getInput;
         private readonly AutoResetEvent _gotInput;
