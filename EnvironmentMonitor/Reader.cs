@@ -1,5 +1,6 @@
 ﻿/*
  * Responsible for reading console input and if input is not given for timeout limit then it throws an TimeoutException
+ * Input can be given using stringReader object also for sending input from unit test 
  */
 
 using System;

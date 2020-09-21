@@ -1,6 +1,7 @@
 ﻿/*
  * Class Alert is responsible for sending alerts to user
  * Here mode of alert is alerting on console
+ * Inheritance is used to change implementation while testing
  */
 
 using System;
@@ -17,10 +18,6 @@ namespace EnvironmentMonitor
             _output = Console.Out;
         }
 
-        public Alert(TextWriter output)
-        {
-            _output = output;
-        }
         public virtual void PrintOnConsole(string message)
         {
             if (message != null)
