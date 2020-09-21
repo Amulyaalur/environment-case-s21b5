@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "AUKiTv7XodCvsoOxlhzHH0p3it/cuvfNe+sYsLlqvQCVUUTVlCEEkY5ErN5v2DADXbF41bcZ3Y6CrTLz5n/8Fg==",
+  "dgSpecHash": "4cNlV6v0XG4+GyV/8pIZ1GT0t3nIhc3SJ2TJq1hX7rC56f8j9K6GVJDEMwUCbREljRoixBlloMnF3bTM4sZ5jw==",
   "success": true,
   "projectFilePath": "C:\\BootCamp\\environment-case-s21b5\\Sender.Tests\\Sender.Tests.csproj",
   "expectedPackageFiles": [
@@ -53,6 +53,7 @@
     "C:\\Users\\320088465\\.nuget\\packages\\xunit.core\\2.4.0\\xunit.core.2.4.0.nupkg.sha512",
     "C:\\Users\\320088465\\.nuget\\packages\\xunit.extensibility.core\\2.4.0\\xunit.extensibility.core.2.4.0.nupkg.sha512",
     "C:\\Users\\320088465\\.nuget\\packages\\xunit.extensibility.execution\\2.4.0\\xunit.extensibility.execution.2.4.0.nupkg.sha512",
+    "C:\\Users\\320088465\\.nuget\\packages\\xunit.runner.console\\2.4.1\\xunit.runner.console.2.4.1.nupkg.sha512",
     "C:\\Users\\320088465\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.0\\xunit.runner.visualstudio.2.4.0.nupkg.sha512"
   ],
   "logs": []
