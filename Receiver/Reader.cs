@@ -40,7 +40,7 @@ namespace Receiver
             _inputThread.Start();
             _getInput.Set();
             bool success = _gotInput.WaitOne(TimeOutMillisecond);
-            
+
             _running = false;
             if (success)
                 return _inputFromConsole;

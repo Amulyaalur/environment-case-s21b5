@@ -13,7 +13,6 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
 
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             Assert.True(r.PropertiesList[0].PropertyName.Equals("Temperature"));
             Assert.True(r.PropertiesList[1].PropertyName.Equals("Humidity"));
             Assert.True(r.PropertiesList[2].PropertyName.Equals("Date"));
@@ -27,11 +26,11 @@ namespace Receiver.Tests
                 new StringReader(
                     "Temperature,Humidity,Date,Time\n37C,50%,15-09-2020,11:10am\n32C,20%,15-09-2020,12:10pm\n\n"),
                 Console.Out);
-
+            r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             var b = r.WhenGetReadingsFromSensorThenAnalyze();
             Assert.True(b);
+            Assert.True(r.AlertStaticObj.FinalStringPrintedOnConsole.Equals(""));
         }
 
         [Fact]
@@ -40,9 +39,8 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n40C,70%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             r.WhenGetReadingsFromSensorThenAnalyze();
-            Assert.Contains("Temperature reached High Warning level:40C", r.AlertStaticObj.FinalStringPrinted);
+            Assert.Contains("Temperature reached High Warning level:40C", r.AlertStaticObj.FinalStringPrintedOnConsole);
         }
 
         [Fact]
@@ -51,9 +49,8 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n41C,70%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             r.WhenGetReadingsFromSensorThenAnalyze();
-            Assert.Contains("Temperature reached High Error level:41C", r.AlertStaticObj.FinalStringPrinted);
+            Assert.Contains("Temperature reached High Error level:41C", r.AlertStaticObj.FinalStringPrintedOnConsole);
         }
 
         [Fact]
@@ -62,9 +59,8 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n2C,70%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             r.WhenGetReadingsFromSensorThenAnalyze();
-            Assert.Contains("Temperature reached Low Warning level:2C", r.AlertStaticObj.FinalStringPrinted);
+            Assert.Contains("Temperature reached Low Warning level:2C", r.AlertStaticObj.FinalStringPrintedOnConsole);
         }
 
         [Fact]
@@ -73,9 +69,8 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n-1C,70%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             r.WhenGetReadingsFromSensorThenAnalyze();
-            Assert.Contains("Temperature reached Low Error level:-1C", r.AlertStaticObj.FinalStringPrinted);
+            Assert.Contains("Temperature reached Low Error level:-1C", r.AlertStaticObj.FinalStringPrintedOnConsole);
         }
 
         [Fact]
@@ -84,9 +79,8 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n10C,71%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             r.WhenGetReadingsFromSensorThenAnalyze();
-            Assert.Contains("Humidity reached Warning level:71%", r.AlertStaticObj.FinalStringPrinted);
+            Assert.Contains("Humidity reached Warning level:71%", r.AlertStaticObj.FinalStringPrintedOnConsole);
 
         }
 
@@ -96,9 +90,8 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n10C,91%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             r.WhenGetReadingsFromSensorThenAnalyze();
-            Assert.Contains("Humidity reached Error level:91%", r.AlertStaticObj.FinalStringPrinted);
+            Assert.Contains("Humidity reached Error level:91%", r.AlertStaticObj.FinalStringPrintedOnConsole);
         }
 
         [Fact]
@@ -107,10 +100,9 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             var values = r.WhenToSplitLine("20C,60%,15-09-2020,1:10pm");
             r.WhenAnalyzeTemperature(values);
-            Assert.True(r.AlertStaticObj.FinalStringPrinted.Equals(""));
+            Assert.True(r.AlertStaticObj.FinalStringPrintedOnConsole.Equals(""));
         }
 
         [Fact]
@@ -119,9 +111,8 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n10C,50%,15-09-2020,1:10pm\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             r.WhenGetReadingsFromSensorThenAnalyze();
-            Assert.True(r.AlertStaticObj.FinalStringPrinted.Equals(""));
+            Assert.True(r.AlertStaticObj.FinalStringPrintedOnConsole.Equals(""));
         }
 
         [Fact]
@@ -130,10 +121,9 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Humidity,Date,Time\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             var values = r.WhenToSplitLine("50%,15-09-2020,1:10pm");
             r.WhenAnalyzeTemperature(values);
-            Assert.True(r.AlertStaticObj.FinalStringPrinted.Equals("CSV does not contain Temperature property."));
+            Assert.True(r.AlertStaticObj.FinalStringPrintedOnConsole.Equals("CSV does not contain Temperature property."));
         }
 
         [Fact]
@@ -142,10 +132,50 @@ namespace Receiver.Tests
             var r = new Receiver(new StringReader("Temperature,Date,Time\n"), Console.Out);
             r.WhenSetAlerterMock();
             r.WhenGetPropertyNamesThenSetPropertyNames();
-            r.WhenWantToAssignIndexToProperties();
             var values = r.WhenToSplitLine("50C,15-09-2020,1:10pm");
             r.WhenAnalyzeHumidity(values);
-            Assert.True(r.AlertStaticObj.FinalStringPrinted.Equals("CSV does not contain Humidity property."));
+            Assert.True(r.AlertStaticObj.FinalStringPrintedOnConsole.Equals("CSV does not contain Humidity property."));
+        }
+        [Fact]
+        public void WhenDatePropertyNotProvidedBySenderThenPromptUser()
+        {
+            var r = new Receiver(new StringReader("Temperature,Humidity,Time\n"), Console.Out);
+            r.WhenSetAlerterMock();
+            r.WhenGetPropertyNamesThenSetPropertyNames();
+            var values = r.WhenToSplitLine("50C,50%,1:10pm");
+            r.WhenAnalyzeTemperature(values);
+            Assert.True(r.AlertStaticObj.FinalStringPrintedOnConsole.Equals("CSV does not contain Date property."));
+        }
+        [Fact]
+        public void WhenTimePropertyNotProvidedBySenderThenPromptUser()
+        {
+            var r = new Receiver(new StringReader("Temperature,Humidity,Date\n"), Console.Out);
+            r.WhenSetAlerterMock();
+            r.WhenGetPropertyNamesThenSetPropertyNames();
+            var values = r.WhenToSplitLine("50C,50%,15-09-2020");
+            r.WhenAnalyzeTemperature(values);
+            Assert.True(r.AlertStaticObj.FinalStringPrintedOnConsole.Equals("CSV does not contain Time property."));
+        }
+
+        [Fact]
+        public void WhenTemperatureValueIsNotProvidedBySenderThenPromptUser()
+        {
+            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
+            r.WhenSetAlerterMock();
+            r.WhenGetPropertyNamesThenSetPropertyNames();
+            var values = r.WhenToSplitLine("NA,50%,12-9-2019,11:10am");
+            r.WhenAnalyzeTemperature(values);
+            Assert.True(r.AlertStaticObj.FinalStringPrintedOnConsole.Equals("Temperature value not provided by sender.Possibility of error in temperature sensor."));
+        }
+        [Fact]
+        public void WhenHumidityValueIsNotProvidedBySenderThenPromptUser()
+        {
+            var r = new Receiver(new StringReader("Temperature,Humidity,Date,Time\n"), Console.Out);
+            r.WhenSetAlerterMock();
+            r.WhenGetPropertyNamesThenSetPropertyNames();
+            var values = r.WhenToSplitLine("41C,NA,12-9-2019,11:10am");
+            r.WhenAnalyzeHumidity(values);
+            Assert.True(r.AlertStaticObj.FinalStringPrintedOnConsole.Equals("Humidity value not provided by sender.Possibility of error in humidity sensor."));
         }
         //added to complete code coverage
         [Fact]
