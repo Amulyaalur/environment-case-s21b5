@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 namespace Receiver
 {
+    //struct properties to store properties by property name
     public struct Properties
     {
         public string PropertyName;
@@ -16,9 +17,13 @@ namespace Receiver
     }
     public class Receiver
     {
+        //List of properties containing property in properties structure
         public readonly List<Properties> PropertiesList = new List<Properties>();
-        private static string[] _propertiesNames;
+
+        //reader is object to handle read line method
         private readonly Reader _reader;
+
+        //alert is class to handle write line method
         public Alert AlertStaticObj;
         public Receiver()
         {
@@ -30,7 +35,7 @@ namespace Receiver
             _reader = new Reader(input);
             AlertStaticObj = new Alert(output);
         }
-
+        //when we want to send output to x unit test then MockAlerter is used
         public void WhenSetAlerterMock()
         {
             AlertStaticObj = new AlertChild();
@@ -40,14 +45,12 @@ namespace Receiver
             string[] split = line.Split(',');
             return split;
         }
+        //Adding property names to properties list
         public void WhenGetPropertyNamesThenSetPropertyNames()
         {
             string line = _reader.WhenReadLine();
-            _propertiesNames = WhenToSplitLine(line);
-        }
-        public void WhenWantToAssignIndexToProperties()
-        {
-            foreach (var t in _propertiesNames)
+            var propertiesNames = WhenToSplitLine(line);
+            foreach (var t in propertiesNames)
             {
                 Properties temp;
                 temp.PropertyName = t;
@@ -66,6 +69,7 @@ namespace Receiver
             }
             return true;
         }
+        //to get index of property
         int WhenGetIndex(string propertyName)
         {
             int id = -1;
@@ -94,7 +98,15 @@ namespace Receiver
             try
             {
                 string valueInString = WhenWantValueOfProperty("Temperature", values);
-                WhenTemperatureIsOutOfLimitsThenAlert(valueInString, values);
+                if (!valueInString.Equals("NA"))
+                {
+                    WhenTemperatureIsOutOfLimitsThenAlert(valueInString, values);
+                }
+                else
+                {
+                    //NA means either temperature is not provided by CSV or its value is not in a practical limits
+                    AlertStaticObj.PrintOnConsole("Temperature value not provided by sender.Possibility of error in temperature sensor.");
+                }
             }
             catch (PropertyNotFoundException e)
             {
@@ -140,7 +152,15 @@ namespace Receiver
             try
             {
                 string valueInString = WhenWantValueOfProperty("Humidity", values);
-                WhenHumidityIsOutOfLimitsThenAlert(valueInString, values);
+                if (!valueInString.Equals("NA"))
+                {
+                    WhenHumidityIsOutOfLimitsThenAlert(valueInString, values);
+                }
+                else
+                {
+                    //NA means either temperature is not provided by CSV or its value is not in a practical limits
+                    AlertStaticObj.PrintOnConsole("Humidity value not provided by sender.Possibility of error in humidity sensor.");
+                }
             }
             catch (PropertyNotFoundException e)
             {
@@ -164,9 +184,10 @@ namespace Receiver
         static void Main()
         {
             Receiver r = new Receiver(); try
-            { r.WhenGetPropertyNamesThenSetPropertyNames();
-                r.WhenWantToAssignIndexToProperties();
-                r.WhenGetReadingsFromSensorThenAnalyze(); }
+            {
+                r.WhenGetPropertyNamesThenSetPropertyNames();
+                r.WhenGetReadingsFromSensorThenAnalyze();
+            }
             catch (TimeoutException) { r.AlertStaticObj.PrintOnConsole("Sender is disconnected"); }
         }
     }

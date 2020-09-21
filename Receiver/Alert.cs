@@ -5,7 +5,7 @@ namespace Receiver
     public class Alert
     {
         private readonly TextWriter _output;
-        public string FinalStringPrinted = "";
+        protected string FinalStringPrinted = "";
         public Alert()
         {
             _output = Console.Out;
@@ -20,10 +20,11 @@ namespace Receiver
             if (message != null)
                 _output.WriteLine(message);
         }
+
+        public string FinalStringPrintedOnConsole => FinalStringPrinted;
     }
     public class AlertChild : Alert
     {
-
         public override void PrintOnConsole(string message)
         {
             FinalStringPrinted = message;
