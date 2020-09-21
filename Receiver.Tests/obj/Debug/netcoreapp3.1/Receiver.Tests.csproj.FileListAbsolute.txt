@@ -195,3 +195,4 @@ C:\BootCamp\environment-case-s21b5\Receiver.Tests\obj\Debug\netcoreapp3.1\Receiv
 C:\BootCamp\environment-case-s21b5\Receiver.Tests\obj\Debug\netcoreapp3.1\Receiver.Tests.dll
 C:\BootCamp\environment-case-s21b5\Receiver.Tests\obj\Debug\netcoreapp3.1\Receiver.Tests.pdb
 C:\BootCamp\environment-case-s21b5\Receiver.Tests\obj\Debug\netcoreapp3.1\Receiver.Tests.genruntimeconfig.cache
+C:\BootCamp\environment-case-s21b5\Receiver.Tests\obj\Debug\netcoreapp3.1\Receiver.Tests.csproj.CoreCompileInputs.cache
