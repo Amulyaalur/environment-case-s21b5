@@ -20,7 +20,11 @@ jobs:
         run: dotnet tool install -g JetBrains.ReSharper.GlobalTools
         
       - name: Add package
-        run: dotnet add package xunit --version 2.4.1
+        run: dotnet add Sensor.Tests/Sensor.Tests.csproj package xunit --version 2.4.1
+        
+      - name: Add package
+        run: dotnet add EnvironmentMonitor.Tests/EnvironmentMonitor.Tests.csproj package xunit --version 2.4.1
+        
          
       - name: Run resharper inspection
         run: jb inspectcode EnvironmentMonitoring.sln /output=insreport.xml
